@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        'use strict' //嚴謹模式
+        // var num = 1 //定義箱子(變數)
+        let box = 'hello world'
+        // const account = 'ch9145' //用const定義account
+        let birthday = '0329'  //單引號包起來才是文字，沒包是數字329(三百二十九)
+        let name = '佳軒'
+        let date = '20220628'
+        // console.log(box)
+        // console.log(account)
+        // console.log(birthday)
+        // console.log('Name:'+name)
+        // 
+        // console.log(x-y+z)
+        // console.log(x*y)
+        // console.log(z/x)
+        // console.log((x+z)/y)
+
+
+        // 字符相加：
+        console.log('我的名字是' + name + '，生日是' + birthday + '，今天日期' + date)
+        // 模板字串符：
+        console.log(`我的名字是${name}，生日是${birthday}，今天日期${date}`)
+
+
+        // if-else的練習：
+        let age = 18
+        if(age >= 18){
+            console.log(`年齡為 ${age}，可以喝酒`)
+        }else{
+            console.log(`年齡為${age}，不可以喝酒`)
+        }
+
+        let account = 'ch9145'
+        let password = '000000'
+        if(account == 'ch9145' && password == '123456' && token == 'asdfasdf'){
+            console.log('成功登入')
+        }else{
+            console.log('帳號或密碼錯誤，請重新輸入')
+        }
+
+        let area = '台中'
+        if( age <= 12 || area == '台北'){
+            console.log('優待票180元')
+        }else{
+            console.log('一般遊客200元')
+        }
+
+        let day = new Date()  //這樣會自動出現當日星期
+        let weekday = day.getDay()
+        // let day = 2
+        if(day == 1){
+            console.log('星期一')
+        }else if(day == 2){
+            console.log('星期二')
+        }else if(day == 3){
+            console.log('星期三')
+        }else if(day == 4){
+            console.log('星期四')
+        }else if(day == 5){
+            console.log('星期五')
+        }else if(day == 6){
+            console.log('星期六')
+        }else if(day == 7){
+            console.log('星期日')
+        }  //但是有點髒，可改用switch寫→需要再自己去搜
+
+        // 變數累加1
+        let num
+        num = 0
+        // console.log(num)
+        // num = num + 1
+        // num++ 
+        // console.log(num)
+        //num++為num=num+1的簡寫 //相反："num--"就是num=num-1簡寫
+        
+        // 迴圈
+        // while(num < 5){
+        //     num++
+        //     console.log(num)
+        // }
+
+        // for (變數定義;條件;變數更新)
+        // 定義i=0 ; 當i小於10的時候，i累加1
+        for(let i=0; i < 5; i++){
+            console.log('遞增數字',i) //逗號隔開:多一個空白
+        } //for end
+
+        for(let i=10; i > 0; i--){
+            console.log('遞減數字',i) //逗號隔開:多一個空白。+隔開：直接接著
+        } //for end
+
+        // 陣列
+        let flavors = ['草莓', '鳳梨', '桑葚', '巧克力', '牛奶']
+        console.log(flavors[0])
+        console.log(flavors[1])
+        console.log(flavors[2])
+        console.log(flavors[3])
+        console.log(flavors[4])
+
+        console.log('口味數量', flavors.length)
+
+        for(let i = 0; i < flavors.length; i++){
+        //    console.log('第'+[i+1] +'種' + '口味：' + flavors[i])
+            console.log(`第${i+1}種口味：${flavors[i]}`)
+        } //for end
+
+        // 物件
+        let pet = {
+            name: '香草', //用逗點隔開
+            age: '3',
+            color: 'white',
+            bark:function(){
+                alert('汪')
+            } //bark end
+        }
+        console.log(pet.name) //點記法
+        console.log(pet['name']) //括弧記法
+
+        // pet.bark()
+        // pet['bark']
+
+        let user = {
+            name:'CH9145',
+            account: 'ch9145',
+            password: '123456',
+            mobile: '0987654321',
+            address: '台中',
+        }
+        console.log(user.name) //點記法
+
+    </script>
+</body>
+</html>
