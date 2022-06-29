@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tab切換頁籤</title>
+    <style>
+        .tab-link {
+            display: flex;
+        }
+
+        .tab-link>a {
+            display: block;
+            background-color: rgb(239, 197, 205);
+            width: 31%;
+            margin: 1%;
+            /* (100%-6個*1%邊界)/3個按鈕=31.3333% */
+            text-decoration: none;
+            text-align: center;
+            color: rgb(26, 8, 10);
+            line-height: 40px;
+            border: 2px solid rgb(255, 209, 217);
+            border-radius: 5px;
+        }
+
+        .tab-content {
+            margin-left: 1%;
+            margin-right: 1%;
+            background-color: rgb(255, 209, 218);
+            display: none;
+            padding: 10px;
+        }
+
+        .tab-link>a.active {
+            background-color: rgb(162, 15, 52);
+            color: white;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .img-fluid{
+            width: 100%;
+        }
+
+        .container{
+            width: 80% auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="tab-link">
+        <a href="#tab1" class="active">冰淇淋</a>
+        <a href="#tab2">冰沙</a>
+        <a href="#tab3">推薦組合</a>
+    </div>
+    <div class="container">
+        <div id="tab1" class="tab-content active">
+            <img src="images/01.jpg" alt="" class="img-fluid">
+            <p>豆腐</p>
+        </div>
+        <div id="tab2" class="tab-content">
+            <img src="images/02.jpg" alt="" class="img-fluid">
+            <p>紅茶</p>
+        </div>
+        <div id="tab3" class="tab-content">
+            <p>豆腐冰淇淋+紅茶冰沙</p>
+            <p>抹茶冰淇淋+紅茶冰沙</p>
+            <p>牛奶冰淇淋+綠豆冰沙</p>
+        </div>
+    </div>
+    <!-- jquery主程式 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <script>
+        $('.tab-link>a').on('click', function (e) {
+            e.preventDefault()
+            $(this).addClass('active')
+            $(this).siblings().removeClass('active')
+
+            // console.log($(this).attr('href')) //點了會出現id名字
+            $($(this).attr('href')).addClass('active')
+            $($(this).attr('href')).siblings().removeClass('active')
+
+        })
+    </script>
+
+</body>
+
+</html>
