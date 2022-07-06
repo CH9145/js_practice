@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>輪播2</title>
+    <style>
+        body{margin: 0;}
+
+        .parent{
+            width: 100%;
+            max-width: 1920px;
+            margin: auto;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .child{
+            /* 去除行內空白，文字大小可設置為0 ，圖片就會從左邊顯示到右邊了 */
+            font-size: 0;
+        }
+
+        .left-arrow, .right-arrow{
+            position: absolute;
+            bottom: 0;
+            cursor: pointer;
+            background-color: rgba(196, 231, 243, 0.3);
+            color: white;
+            width: 30px;
+            height: 90%;
+            /* height: 60px; */
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .left-arrow{
+            left: 0px;
+        }
+        
+        .right-arrow{
+            right: 0px;
+        }
+
+        .indicator{
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .indicator>li{
+            width: 10px;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        .indicator>li:last-child{
+            margin-right: 0;
+        }
+
+        .indicator>li.active{
+            background-color: whitesmoke;
+        }
+
+        .loading-overlay{
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            background-color: lightblue;
+            z-index: 999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform: all .3s;
+        }
+        
+        .loading-overlay.active{
+            top: -100vh;
+        }
+
+        .spinner {
+   position: relative;
+   width: 56px;
+   height: 56px;
+}
+
+.spinner > div {
+   width: 100%;
+   height: 100%;
+   border-radius: 50%;
+   border: 13.4px solid rgba(71,75,255,0.1);
+   position: absolute;
+   top: 0;
+   left: 0;
+   animation: spinner-g7vlvwmd 0.65s linear infinite;
+   z-index: 0;
+}
+
+.spinner > div::before {
+   content: '';
+   height: 13.4px;
+   width: 13.4px;
+   border-radius: 50%;
+   background: #4a3100;
+   position: absolute;
+   top: 50%;
+   animation: spinner-h1vps1md 1.3s infinite reverse steps(1);
+   transform: translate(calc(2 * var(--translate-2)), calc(var(--translate) * 1%));
+   z-index: 1;
+}
+
+.spinner > div:nth-of-type(1) {
+   --translate: -50;
+   --translate-2: calc(56px / 8);
+}
+
+.spinner > div:nth-of-type(1)::before {
+   right: 0;
+}
+
+.spinner > div:nth-of-type(2) {
+   --translate: 50;
+   --translate-2: calc(-56px / 8);
+   animation-delay: 0.65s;
+   animation-direction: reverse;
+   transform: translate(21.3px, 0);
+}
+
+.spinner > div:nth-of-type(2)::before {
+   left: 0;
+   transform: translate(calc(-56px / 4), -50%);
+   animation-direction: normal;
+}
+
+@keyframes spinner-h1vps1md {
+   0% {
+      opacity: 0;
+   }
+
+   50% {
+      opacity: 1;
+   }
+}
+
+@keyframes spinner-g7vlvwmd {
+   from {
+      transform: translate(calc(var(--translate) * 1%), 0) translate(calc(var(--translate-2)), 0) rotate(0deg);
+   }
+
+   to {
+      transform: translate(calc(var(--translate) * 1%), 0) translate(calc(var(--translate-2)), 0) rotate(360deg);
+   }
+}
+
+    </style>
+
+</head>
+<body>
+    <div class="loading-overlay">
+        <div class="spinner">
+        <div></div>
+        <div></div>
+</div>
+    </div>
+
+
+    <div class="parent">
+        <div class="child">
+            <img src="images/about-01.jpg" alt="">
+            <img src="images/about-02.jpg" alt="">
+            <img src="images/about-03.jpg" alt="">
+            <img src="images/about-04.jpg" alt="">
+            <!-- <img src="images/news-banner.jpg" alt="">
+            <img src="images/news-summer.jpg" alt="">
+            <img src="images/news-camp.jpg" alt=""> -->
+        </div>
+        <div class="left-arrow"><</div>
+        <div class="right-arrow">></div>
+        <ol class="indicator">
+            <li class="active"></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ol>
+    </div>
+
+
+    <!-- jquery主程式 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+
+        $(window).on('load',function(){
+            $('.loading-overlay').addClass('active')
+        })
+        
+        $('.child').prepend($('.child>img').last().clone())//第二層裡面最前面 補上 圖片陣列中的最後一個 的複製元素(clone)
+        $('.child').append($('.child>img').eq(1).clone())  //第二層裡面最後面 補上 圖片陣列中的第二個(第一個是最後一個的複製，eq為0) 的複製元素
+
+        let currentNum     = 1 //當前的數字
+        let parentWidth    = $('.parent').width() //父層寬度=父層寬
+        let imgLength      = $('.child>img').length //子層個數
+        let childTotalWidth = parentWidth * imgLength //子層寬=父層寬度*子層個數
+
+        $('.child').css({'margin-left': -parentWidth * (currentNum)}) //調整第二層一開始位移的位置//左邊界往左邊推一個圖片寬 -800*1//這樣最後一張就會被推到第一張之前
+        $('.child').width( childTotalWidth ) //子層幒寬 = 父層寬度*子層個數 (進到畫面)
+        $('.child>img').width( parentWidth )  //子層下的圖片寬 = 父層寬度
+        
+
+
+        $('.right-arrow').on('click',function(){
+            if(currentNum == imgLength - 1){
+                                // 假如當前數字相等於圖片總數
+            }else{
+                currentNum = currentNum + 1 //當前數字為自己累加1
+                common()
+                // $('.child').animate({'margin-left': -parentWidth * (currentNum - 1)})
+            }                                          //寬度*個數
+        }) //.right-arrow end
+
+
+
+        $('.left-arrow').on('click',function(){
+            if(currentNum == 0){
+                //假如 currentLeftNum完全為1，執行以下這段
+            }else{
+                currentNum = currentNum - 1
+                // $('.child').animate({'margin-left': -parentWidth * (currentNum - 1)})
+                common()
+            } //if currentNum==1 end
+        }) // .left-arrow end
+
+        
+        //.indicator start
+        $('.indicator>li').on('click',function(){
+            // console.log('當前的',currentNum)
+            // console.log('現在點擊的',$(this).index())
+            //index() //序列號
+            //eq() //第幾個的元素
+            currentNum = $(this).index() +1    //不然初始會是0
+            common()
+            // $('.indicator>li').eq(currentNum - 1).addClass('active')
+            //              //eq要把剛剛為了index的+1減回來
+            // $('.indicator>li').eq(currentNum - 1).siblings().removeClass('active')
+        }) //.indicator end
+
+        function common(){
+            // $('.child').animate({'margin-left': -parentWidth * currentNum})
+            $('.child').animate({'margin-left': -parentWidth * currentNum}, function(){
+                //callback函式執行完之後執行
+                //假如當前數字為總數-1(右邊按鈕)
+                if( currentNum == imgLength - 1){
+                    currentNum = 1
+                }
+                
+                //左邊按鈕
+                if(currentNum == 0){
+                    currentNum = imgLength - 2
+                }
+                
+                //前面動畫跑完時執行
+                $('.child').css({'margin-left': -parentWidth * currentNum}) 
+                $('.indicator>li').eq(currentNum - 1).addClass('active')
+                $('.indicator>li').eq(currentNum - 1).siblings().removeClass('active')
+                
+            }) //callback end
+            
+        } //common end
+        
+
+        //縮放時的變化(RWD用)
+        $(window).resize(function(){
+            parentWidth    = $('.parent').width()
+            childTotalWidth = parentWidth * imgLength
+            $('.child').css({'margin-left': -parentWidth * currentNum}) 
+            $('.child').width( childTotalWidth )
+            $('.child>img').width( parentWidth )
+        })//window resize end
+
+        setInterval(function(){
+            $('.right-arrow').click()
+        },3000)//每3秒點一次右邊箭頭 end
+
+
+    </script>
+</body>
+</html>

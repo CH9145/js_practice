@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .page-top{
+        position: fixed;
+        bottom: 10px;
+        background-color: green;
+        width: 50px;
+        line-height: 50px;
+        border-radius: 50%;
+        display: block;
+        text-align: center;
+        color: white;
+        /* display: none; */
+        right: -60px;
+        transform: rotate(0deg);
+        transition: all .5s ;
+    }
+    .page-top.active{
+        display: block;
+        right: 10px;
+        transform: rotate(360deg);
+    }
+
+</style>
+<body>
+
+    <a href="javascript:;">回到上方</a>
+    
+<script>
+
+    //回到上方的按鈕
+
+    let offsetTop
+    let product1Top = $('.product-section-1').offset().top
+    
+        $(window).scroll(function(){
+            offsetTop = $(window).scrollTop()
+            
+            //卷軸高度>=900會出現按鈕
+            if( offsetTop >= 900){
+                $('.page-top').addClass('active')
+            }else{
+                $('.page-top').removeClass('active')
+            }
+        }) //scroll end
+
+    //點page-top回到最上方
+    $('.page-Top').on('click',function(){
+        $('html',body).animate({scrollTop:0})
+    }) //.page-top end
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>輪播</title>
+    <style>
+        .parent{
+            width: 800px;
+            margin: auto;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .child{
+            /* 圖寬度*項目數 */
+            width: 3200px;
+
+            /* 去除行內空白，文字大小可設置為0 */
+            /* 圖片就會從左邊顯示到右邊了!!!!!!! */
+            font-size: 0;
+        }
+
+        .parent img{
+            width: 800px;
+        }
+
+        .left-arrow, .right-arrow{
+            position: absolute;
+            bottom: 0;
+            cursor: pointer;
+            background-color: rgba(196, 231, 243, 0.3);
+            color: white;
+            width: 30px;
+            height: 100%;
+            /*如果感應區高度不要100%，自設較小的感應區
+            top: 50%;
+            transform: translateY(-50%);  */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .left-arrow{
+            left: 0px;
+        }
+        
+        .right-arrow{
+            right: 0px;
+        }
+
+
+    </style>
+
+</head>
+<body>
+    <div class="parent">
+        <div class="child">
+            <img src="images/about-01.jpg" alt="">
+            <img src="images/about-02.jpg" alt="">
+            <img src="images/about-03.jpg" alt="">
+            <img src="images/about-04.jpg" alt="">
+        </div>
+        <div class="left-arrow"><</div>
+        <div class="right-arrow">></div>
+    </div>
+
+
+<!-- 輪播有文字、或用div包起幾個元素的話 -->
+<!-- 要用float寫 -->
+
+    <!--
+        div寫float讓圖可以並排
+        .parent不用寫font-size:0
+        .grandson{ float:left; }
+
+    <div class="parent">
+        <div class="child">
+            <div class="img-content grandson">
+                <h2>123</h2>
+                <img src="images/about-01.jpg" alt="">
+            </div>
+        </div>
+        <div class="child">
+            <div class="img-content grandson">
+                <h2>123</h2>
+                <img src="images/about-02.jpg" alt="">
+            </div>
+        </div>
+    </div> -->
+    
+
+
+
+    <!-- jquery主程式 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+        let currentLeftNum = 0
+        $('.right-arrow').on('click',function(){
+            if(currentLeftNum == -2400){
+                                // 滑了800px*3次
+            }else{
+            // 每點一次箭頭會減800
+            currentLeftNum = currentLeftNum - 800
+            // console.log(currentLeftNum)
+            // 第二層 動畫left位移一張圖片, 3000毫秒
+            $('.child').animate({'margin-left':currentLeftNum}, 800)
+            }
+        })
+
+        $('.left-arrow').on('click',function(){
+            if(currentLeftNum == 0){
+                //假如 currentLeftNum完全為0，執行以下這段
+
+            }else{
+                //假如 currentLeftNum不為0，執行以下這段
+
+                // 每點一次箭頭會加800
+                currentLeftNum = currentLeftNum + 800
+                // 第二層 動畫left位移一張圖片, 3000毫秒
+                $('.child').animate({'margin-left': currentLeftNum}, 800)
+                
+            } //if end
+        }) // .left-arrow end
+
+
+        
+
+    </script>
+</body>
+</html>
